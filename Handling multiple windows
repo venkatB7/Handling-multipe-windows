@@ -1,0 +1,94 @@
+public class HDFCBankSwitchToWindow {
+
+	public static WebDriver driver;
+	public static int iBrowserType = 1; // 1- Chrome,2- FF,3- Edge,4- IE
+	public static String sURL = "https://www.hdfcbank.com/";
+
+	public static void main(String[] args) throws Exception {
+		invokeBrowser();
+		browserSetting();
+		navigateURL();
+		getPageInfo();
+	  switchToWindowByPassingDriver();
+	  closeBrowser();
+	}
+
+	public static void invokeBrowser() {
+		
+		switch (iBrowserType) {
+		case 1:
+			ChromeOptions chromeOptions = new ChromeOptions();
+			chromeOptions.addArguments("--disable-notifications");
+			System.out.println("User Option is : "+iBrowserType+", So invoking Chrome Browser!!!");
+			System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver.exe"); 
+			driver = new ChromeDriver(chromeOptions);
+			break;
+		case 2:
+			System.out.println("User Option is : "+iBrowserType+", So invoking FireFox Browser!!!");
+			System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver.exe"); 
+			driver = new FirefoxDriver();
+			break;
+		case 3:
+			System.out.println("User Option is : "+iBrowserType+", So invoking Edge Browser!!!");
+			System.setProperty("webdriver.edge.driver", "./drivers/msedgedriver.exe"); 
+			driver = new EdgeDriver();
+			break;
+		case 4:
+			System.out.println("User Option is : "+iBrowserType+", So invoking IE Browser!!!");
+			System.setProperty("webdriver.ie.driver", "./drivers/iedriver.exe"); 
+			driver = new InternetExplorerDriver();
+			break;
+
+		default:
+			
+			System.out.println("User Option is wrong : "+iBrowserType+", So invoking default Chrome Browser!!!");
+			System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver.exe"); 
+			driver = new ChromeDriver();
+			break;
+		}
+		
+}
+	public static void browserSetting() {
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+	}
+
+	public static void navigateURL() {
+		driver.get(sURL); 
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+	}
+	
+	
+	public static void getPageInfo() {
+		System.out.println("Page Title is : "+driver.getTitle());
+		System.out.println("Current URL is : "+driver.getCurrentUrl());
+		//System.out.println("Get Window Handle : "+driver.getWindowHandle());
+	}
+	
+	
+	public static void switchToWindowByPassingDriver() {
+		Set<String> allWindows;
+		String currentWindow;
+		String newWindow = null;
+		allWindows = driver.getWindowHandles();
+		currentWindow = driver.getWindowHandle();
+		if(allWindows.size()>0) {
+			for (String window : allWindows) {
+				if(!window.equals(currentWindow)) {
+					newWindow = window;
+				}
+			}
+			driver.switchTo().window(newWindow);
+		}
+		
+	}
+	
+		public static void closeBrowser() {
+		driver.quit();
+	}
+	
+	
+	
+	
+}
