@@ -1,0 +1,8 @@
+// Identify file input element
+WebElement inputFile = driver.findElement(By.id("file-upload"));
+
+// Provide path of the file to be uploaded
+String filePath = "path/to/file.txt";
+inputFile.sendKeys(filePath);
+
+
