@@ -1,0 +1,81 @@
+public class Frames {
+	public static WebDriver driver;
+	public static int iBrowserType = 8;
+	public static String sURL = "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox";
+
+	public static void main(String[] args) {
+		invokeBrowser();
+		browserSetting();
+		navigateURL();
+		PagesourceInfo();
+		switchtoframe();
+		closeBrowser();
+	}
+
+	public static void invokeBrowser() {
+
+		switch (iBrowserType) {
+		case 1:
+			System.out.println("User Option is : " + iBrowserType + ", So invoking Chrome Browser!!!");
+			System.setProperty("webdriver.chrome.driver", "./Driver/chromedriver.exe");
+			driver = new ChromeDriver();
+			break;
+		case 2:
+			System.out.println("User Option is : " + iBrowserType + ", So invoking FireFox Browser!!!");
+			System.setProperty("webdriver.gecko.driver", "./Driver/geckodriver.exe");
+			driver = new FirefoxDriver();
+			break;
+		case 3:
+			System.out.println("User Option is : " + iBrowserType + ", So invoking Edge Browser!!!");
+			System.setProperty("webdriver.edge.driver", "./Driver/msedgedriver.exe");
+			driver = new EdgeDriver();
+			break;
+		case 4:
+			System.out.println("User Option is : " + iBrowserType + ", So invoking IE Browser!!!");
+			System.setProperty("webdriver.ie.driver", "./Driver/iedriver.exe");
+			driver = new InternetExplorerDriver();
+			break;
+
+		default:
+			System.out.println("User Option is wrong : " + iBrowserType + ", So invoking default Chrome Browser!!!");
+			System.setProperty("webdriver.chrome.driver", "./Driver/chromedriver.exe");
+			driver = new ChromeDriver();
+			break;
+		}
+
+	}
+
+	public static void browserSetting() {
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+	}
+
+	public static void navigateURL() {
+		driver.get(sURL);
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+	}
+
+	public static void PagesourceInfo() {
+		System.out.println("Page Title is : " + driver.getTitle());
+		System.out.println("Current URL is : " + driver.getCurrentUrl());
+		System.out.println("Get Window Handle : " + driver.getWindowHandle());
+		
+}
+	public static void switchtoframe() {
+		WebElement oFrame;
+		oFrame=driver.findElement(By.xpath("//iframe[@title='MDN Web Docs Interactive Example']"));
+		driver.switchTo().frame(oFrame);
+		driver.findElement(By.id("output"));
+		driver.findElement(By.xpath("//label[text()='Horns']")).click();
+	}
+	
+
+
+	public static void closeBrowser() {
+	
+	driver.quit()
+}
+}
+
+	
