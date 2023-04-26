@@ -1,0 +1,27 @@
+
+// Initialize WebDriver
+WebDriver driver = new ChromeDriver();
+
+// Open URL in first tab
+driver.get("http://www.google.com");
+
+// Open a new tab using keyboard shortcut
+driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL +"t");
+
+// Switch to the new tab
+ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+driver.switchTo().window(tabs.get(1));
+
+// Open URL in new tab
+driver.get("http://www.facebook.com");
+
+// Switch back to the first tab
+driver.switchTo().window(tabs.get(0));
+
+// Perform actions in the first tab
+driver.findElement(By.name("q")).sendKeys("Selenium");
+
+// Close the browser
+driver.quit();
+
+
