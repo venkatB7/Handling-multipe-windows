@@ -1,0 +1,89 @@
+
+
+public class AmazonLogin {
+	public static WebDriver driver;
+	public static int iBrowserType = 8;
+	public static String sURL = "https://www.amazon.in/";
+
+	public static void main(String[] args) throws Exception  {
+		invokeBrowser();
+		browserSetting();
+		navigateURL();
+		PagesourceInfo();
+		closeBrowser();
+	}
+
+	public static void invokeBrowser() {
+
+		switch (iBrowserType) {
+		case 1:
+			System.out.println("User Option is : " + iBrowserType + ", So invoking Chrome Browser!!!");
+			System.setProperty("webdriver.chrome.driver", "./Driver/chromedriver.exe");
+			driver = new ChromeDriver();
+			break;
+		case 2:
+			System.out.println("User Option is : " + iBrowserType + ", So invoking FireFox Browser!!!");
+			System.setProperty("webdriver.gecko.driver", "./Driver/geckodriver.exe");
+			driver = new FirefoxDriver();
+			break;
+		case 3:
+			System.out.println("User Option is : " + iBrowserType + ", So invoking Edge Browser!!!");
+			System.setProperty("webdriver.edge.driver", "./Driver/msedgedriver.exe");
+			driver = new EdgeDriver();
+			break;
+		case 4:
+			System.out.println("User Option is : " + iBrowserType + ", So invoking IE Browser!!!");
+			System.setProperty("webdriver.ie.driver", "./Driver/iedriver.exe");
+			driver = new InternetExplorerDriver();
+			break;
+
+		default:
+			System.out.println("User Option is wrong : " + iBrowserType + ", So invoking default Chrome Browser!!!");
+			System.setProperty("webdriver.chrome.driver", "./Driver/chromedriver.exe");
+			driver = new ChromeDriver();
+			break;
+		}
+
+	}
+
+	public static void browserSetting() {
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+	}
+
+	public static void navigateURL() {
+		driver.get(sURL);
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+	}
+
+	public static void PagesourceInfo() throws Exception {
+		WebElement ologo;
+		
+		System.out.println("Page Title is : " + driver.getTitle());
+		System.out.println("Current URL is : " + driver.getCurrentUrl());
+		System.out.println("Get Window Handle : " + driver.getWindowHandle());
+		ologo = driver.findElement(By.id("nav-logo-sprites"));
+		CaptureScreenShot.TakescrnshtAsfilebypassingwebelemnt(ologo,"Amazonlogo");
+}
+	
+	
+	
+	public static void closeBrowser() {
+		driver.quit();
+}
+}
+
+	
+		
+	
+//Wrapper file:
+
+
+public static void TakescrnshtAsfilebypassingwebelemnt(WebElement element, String filename) throws Exception {
+		File odis = new File("./snap/"+filename+".png");
+		TakesScreenshot screenshot = (TakesScreenshot) element;
+		File oscr = screenshot.getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(oscr,odis);
+		
+	}
