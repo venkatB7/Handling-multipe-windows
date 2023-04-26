@@ -1,0 +1,26 @@
+Scenario: Verify Credit Card Payment Functionality
+
+Preconditions:
+- User has an active account with available balances
+- User has added a credit card to their account
+
+Steps:
+1. Navigate to the login page
+2. Enter valid login credentials
+3. Click on the "Login" button
+4. Navigate to the payment page
+5. Enter payment amount
+6. Select "Credit Card" as payment method
+7. Enter credit card details (card number, expiration date, CVV)
+8. Click on the "Submit" button
+9. Verify that the payment is successful
+10. Verify that the total balance has been updated
+
+Expected Results:
+- User should be able to successfully make a payment using their credit card
+- The total balance should be updated after the payment is made
+
+Test data:
+- Valid login credentials
+- Valid credit card details (card number, expiration date, CVV)
+- Payment amount (e.g. $450)
