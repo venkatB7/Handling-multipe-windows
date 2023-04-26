@@ -1,0 +1,52 @@
+
+
+public class Read_Excel {
+
+    
+
+    public void readExcel(String filePath,String fileName,String sheetName) throws IOException{
+    File file =    new File(filePath+"\\"+fileName);  
+    System.out.println(file);
+
+    FileInputStream inputStream = new FileInputStream(file);
+    Workbook guru99Workbook = null;
+    String fileExtensionName = fileName.substring(fileName.indexOf("."));
+    System.out.println(fileExtensionName);
+    
+    if(fileExtensionName.equals(".xlsx")){
+    guru99Workbook = new XSSFWorkbook(inputStream);
+
+    } 
+    else if(fileExtensionName.equals(".xls")){
+    guru99Workbook = new HSSFWorkbook(inputStream);
+
+    }
+
+    Sheet guru99Sheet = guru99Workbook.getSheet(sheetName);
+    int rowCount = guru99Sheet.getLastRowNum();
+     for (int i = 0; i < rowCount+1; i++) {
+     Row row = guru99Sheet.getRow(i);
+
+        for (int j = 0; j < row.getLastCellNum(); j++) {
+      	String sCell_value=row.getCell(j).getRichStringCellValue().toString();
+           System.out.print(sCell_value+"|");
+
+        }
+
+        System.out.println();
+
+    }
+
+    }
+  
+
+    public static void main(String...strings) throws IOException{
+
+   
+    Read_Excel objExcelFile = new Read_Excel();
+    String filePath = System.getProperty("user.dir")+"\\src\\test\\java";
+    objExcelFile.readExcel(filePath,"Testexcel.xlsx","Sheet1");
+
+    }
+
+}
