@@ -1,0 +1,37 @@
+//Positive scenario for Alerts:
+
+@Test
+public void testAlertPositiveScenario() throws InterruptedException {
+  
+  driver.get("https://www.example.com");
+  
+ 
+  driver.findElement(By.id("alertBtn")).click();
+  
+  Alert alert = driver.switchTo().alert();
+  
+  String expectedMessage = "This is an alert message";
+  String actualMessage = alert.getText();
+  Assert.assertEquals(actualMessage, expectedMessage);
+  
+
+  alert.accept();
+}
+
+//Negative scenario for Alerts:
+
+@Test
+public void testAlertNegativeScenario() throws InterruptedException {
+ 
+  driver.get("https://www.example.com");
+  
+ 
+  driver.findElement(By.id("noAlertBtn")).click();
+  
+  try {
+    Alert alert = driver.switchTo().alert();
+    fail("Expected NoAlertPresentException to be thrown");
+  } catch (NoAlertPresentException e) {
+    
+  }
+}
