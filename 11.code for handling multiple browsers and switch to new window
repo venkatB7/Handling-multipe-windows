@@ -1,0 +1,35 @@
+// Setup ChromeDriver
+System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+WebDriver driver = new ChromeDriver();
+
+// Navigate to the website
+driver.get("https://www.example.com");
+
+// Store the current window handle
+String currentHandle = driver.getWindowHandle();
+
+// Click a link that opens in a new window
+WebElement link = driver.findElement(By.linkText("Open new window"));
+link.click();
+
+// Switch to the new window
+for (String handle : driver.getWindowHandles()) {
+    if (!handle.equals(currentHandle)) {
+        driver.switchTo().window(handle);
+        break;
+    }
+}
+
+// In the new window, do some action
+driver.findElement(By.id("newWindowElement")).click();
+
+// Switch back to the original window
+driver.switchTo().window(currentHandle);
+
+// Continue with the original window
+driver.findElement(By.id("originalWindowElement")).click();
+
+// Close the browser
+driver.quit();
+
+
