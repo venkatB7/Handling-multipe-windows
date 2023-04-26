@@ -1,0 +1,24 @@
+
+// Set download path
+System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+String downloadPath = "path/to/download/folder";
+HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+chromePrefs.put("profile.default_content_settings.popups", 0);
+chromePrefs.put("download.default_directory", downloadPath);
+
+// Disable default download prompt
+chromeOptions = new ChromeOptions();
+chromeOptions.setExperimentalOption("prefs", chromePrefs);
+chromeOptions.addArguments("--no-sandbox");
+
+// Launch Chrome browser
+WebDriver driver = new ChromeDriver(chromeOptions);
+
+// Navigate to download link/file
+driver.get("https://example.com/download/file.pdf");
+
+// Wait for file to download
+Thread.sleep(5000);
+
+// Close the browser
+driver.quit();
