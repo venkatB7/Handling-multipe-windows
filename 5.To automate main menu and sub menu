@@ -1,0 +1,13 @@
+WebElement mainMenuItem = driver.findElement(By.xpath("//div[@class='main-menu']//a[@class='menu-item'][text()='Menu Item']"));
+
+
+Actions actions = new Actions(driver);
+actions.moveToElement(mainMenuItem).perform();
+
+
+WebDriverWait wait = new WebDriverWait(driver, 10);
+WebElement subMenu = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@class='sub-menu']//a[@class='sub-menu-item'][text()='Sub-Menu Item']")));
+subMenu.click();
+
+WebElement element = driver.findElement(By.xpath("//div[@class='element']"));
+element.click();
