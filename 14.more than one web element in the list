@@ -1,0 +1,8 @@
+//  find_elements to retrieve a list of web elements that match a specific xpath or css_selector.
+
+elements = driver.find_elements_by_xpath('//div[@class="my-class"]');
+
+//then iterate through the list of elements and perform actions on each of them
+
+for element in elements:
+  element.click();
